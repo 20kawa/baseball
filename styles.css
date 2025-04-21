@@ -1,97 +1,90 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-#calendarContainer {
-  width: 100%;
-  max-width: 600px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.calendar-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 #monthYear {
-  font-size: 1.5rem;
-  font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
+.nav-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-button:hover {
-  background-color: #45a049;
+.nav-button:hover {
+    background-color: #45a049;
 }
 
 .calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    grid-template-rows: repeat(6, 1fr);
 }
 
 .day-cell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #f9f9f9;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #e9e9e9;
+    border-radius: 5px;
+    cursor: pointer;
+    min-height: 100px;
 }
 
 .day-cell:hover {
-  background-color: #e0e0e0;
+    background-color: #d1d1d1;
 }
 
 .game-info {
-  font-size: 12px;
-  color: #333;
-  text-align: center;
-}
-
-.game-info span {
-  font-weight: bold;
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+    margin-top: 5px;
 }
 
 @media screen and (max-width: 600px) {
-  #calendarContainer {
-    padding: 10px;
-    max-width: 100%;
-  }
-  
-  button {
-    font-size: 0.8rem;
-    padding: 5px;
-  }
-  
-  .calendar-grid {
-    grid-template-columns: repeat(7, 1fr);
-  }
+    .calendar-container {
+        padding: 10px;
+    }
+
+    .nav-button {
+        font-size: 0.8rem;
+        padding: 5px;
+    }
 }
