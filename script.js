@@ -1,64 +1,78 @@
-// Example Game Data (You would ideally fetch this from a database or an API)
 const games = {
-  "2025-04-21": {
-    time: "7:00 PM",
-    teams: "Team A vs Team B",
-    location: "Stadium X"
-  },
-  "2025-04-22": {
-    time: "3:00 PM",
-    teams: "Team C vs Team D",
-    location: "Stadium Y"
-  },
-  // Add more games here
+  // Example: Format { date: ['Game1', 'Game2'] }
+  '2025-04-05': ['Team A vs Team B'],
+  '2025-04-10': ['Team C vs Team D'],
+  '2025-04-12': ['Team E vs Team F'],
+  // Add more games as needed
 };
 
-// Function to generate the calendar days dynamically
-function renderCalendar(month, year) {
-  const calendarGrid = document.querySelector(".calendar-grid");
-  calendarGrid.innerHTML = ""; // Clear the grid before rendering
-  
-  const daysInMonth = new Date(year, month, 0).getDate(); // Get number of days in month
-  const firstDay = new Date(year, month - 1, 1).getDay(); // Get day of the week of the first day of the month
-  
-  let dayCounter = 1;
-  
-  // Add empty cells for days before the 1st day of the month
+let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ...)
+let currentYear = 2025;
+
+function renderCalendar() {
+  const monthYear = document.getElementById('monthYear');
+  const calendarGrid = document.getElementById('calendarGrid');
+
+  // Set the month and year in the header
+  monthYear.textContent = `Game Schedule - ${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
+
+  // Get the first day of the month and the number of days in the month
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  // Clear previous calendar grid
+  calendarGrid.innerHTML = '';
+
+  // Add empty cells before the first day
   for (let i = 0; i < firstDay; i++) {
-    const emptyCell = document.createElement("div");
-    emptyCell.classList.add("calendar-cell");
-    calendarGrid.appendChild(emptyCell);
+    calendarGrid.innerHTML += '<div class="day-cell"></div>';
   }
 
-  // Add actual days to the calendar
-  for (let day = firstDay; day < firstDay + daysInMonth; day++) {
-    const date = `${year}-${month < 10 ? '0' + month : month}-${dayCounter < 10 ? '0' + dayCounter : dayCounter}`;
-    
-    const dayCell = document.createElement("div");
-    dayCell.classList.add("calendar-cell");
-    dayCell.innerHTML = dayCounter;
-    
-    // Check if there are games scheduled for this day
-    if (games[date]) {
-      dayCell.classList.add("game-day"); // You can add a CSS class to highlight the day
-      dayCell.setAttribute("title", `${games[date].teams} at ${games[date].location} at ${games[date].time}`);
+  // Add day cells for the month
+  for (let day = 1; day <= lastDate; day++) {
+    const dayDate = new Date(currentYear, currentMonth, day);
+    const dateString = dayDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+    const cell = document.createElement('div');
+    cell.classList.add('day-cell');
+    cell.textContent = day;
+
+    // Add games to the day cell if there are any
+    if (games[dateString]) {
+      cell.classList.add('game');
+      cell.title = games[dateString].join(', '); // Show games on hover
     }
 
-    dayCell.onclick = () => showGameDetails(date); // Show game details on click
-    calendarGrid.appendChild(dayCell);
-    dayCounter++;
+    calendarGrid.appendChild(cell);
   }
 }
 
-// Show game details in the header when a day is clicked
-function showGameDetails(date) {
-  const gameDetails = games[date];
-  if (gameDetails) {
-    document.getElementById('tonightGames').innerText = `${gameDetails.teams} at ${gameDetails.location} at ${gameDetails.time}`;
+function changeMonth(delta) {
+  currentMonth += delta;
+
+  if (currentMonth < 0) {
+    currentMonth = 11; // Wrap to December
+    currentYear--;
+  } else if (currentMonth > 11) {
+    currentMonth = 0; // Wrap to January
+    currentYear++;
+  }
+
+  renderCalendar();
+}
+
+function showGamesForTonight() {
+  const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+  const tonightGames = games[today];
+
+  const tonightGamesElement = document.getElementById('tonightGames');
+  if (tonightGames) {
+    tonightGamesElement.textContent = tonightGames.join(', ');
   } else {
-    document.getElementById('tonightGames').innerText = "No games scheduled.";
+    tonightGamesElement.textContent = 'No games today.';
   }
 }
 
-// Initialize the calendar for April 2025
-renderCalendar(4, 2025);
+// Initial render
+renderCalendar();
+showGamesForTonight();
