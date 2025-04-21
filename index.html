@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game Schedule Calendar</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,45 +17,22 @@
         header {
             background-color: #3e8e41;
             color: white;
-            padding: 15px 0;
+            padding: 20px 0;
             text-align: center;
             font-size: 24px;
         }
 
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-gap: 5px;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .day-cell {
+        .month-year {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            cursor: pointer;
-            position: relative;
-            font-size: 16px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        .day-cell.game {
-            background-color: #c2f0c2;
-        }
-
-        .game-info {
-            position: absolute;
-            bottom: 5px;
-            font-size: 12px;
-            color: #333;
-            text-align: center;
+        .month-year span {
+            font-size: 24px;
         }
 
         .calendar-btn {
@@ -72,15 +48,53 @@
             background-color: #45a049;
         }
 
-        .month-year {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-gap: 10px;
             padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .month-year span {
-            font-size: 24px;
+        .day-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            font-size: 18px;
+            height: 100px;
+            overflow: hidden;
+        }
+
+        .day-cell.game {
+            background-color: #c2f0c2;
+            text-align: center;
+        }
+
+        .game-info {
+            position: absolute;
+            bottom: 5px;
+            font-size: 12px;
+            color: #333;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .game-info span {
+            display: block;
+            font-size: 12px;
+            color: #333;
         }
 
         /* Responsive styles */
@@ -91,8 +105,15 @@
             }
 
             .day-cell {
-                font-size: 12px;
+                font-size: 14px;
                 padding: 8px;
+                height: auto;
+                overflow: visible;
+            }
+
+            .game-info {
+                font-size: 10px;
+                padding: 2px;
             }
         }
     </style>
@@ -113,9 +134,16 @@
 
     <script>
         const games = {
-            '2025-04-05': ['Pickle vs Apple', 'Ahhh vs Banana'],
-            '2025-04-10': ['Team C vs Team D'],
-            '2025-04-12': ['Team E vs Team F'],
+            '2025-04-05': [
+                { match: 'Pickle vs Apple', score: '3-2' },
+                { match: 'Ahhh vs Banana', score: '1-1' }
+            ],
+            '2025-04-10': [
+                { match: 'Team C vs Team D', score: '4-5' }
+            ],
+            '2025-04-12': [
+                { match: 'Team E vs Team F', score: '2-3' }
+            ],
         };
 
         let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ... )
@@ -152,10 +180,10 @@
                 // Add games to the day cell if there are any
                 if (games[dateString]) {
                     cell.classList.add('game');
-                    // Add game names below the date in the day cell
+                    // Add game names and scores below the date in the day cell
                     const gameInfo = document.createElement('div');
                     gameInfo.classList.add('game-info');
-                    gameInfo.textContent = games[dateString].join(' | '); // Show games on the same day
+                    gameInfo.innerHTML = games[dateString].map(game => `${game.match}: <strong>${game.score}</strong>`).join('<br />'); // Show games with scores on the same day
                     cell.appendChild(gameInfo);
                 }
 
