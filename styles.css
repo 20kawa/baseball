@@ -52,6 +52,7 @@ h1 {
   border-radius: 8px;
   min-height: 80px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -61,9 +62,9 @@ h1 {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 
-.day-cell.game {
-  background-color: #4CAF50;
-  color: white;
+.day-cell .date {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .day-cell .game-details {
