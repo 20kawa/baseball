@@ -41,21 +41,29 @@ function renderCalendar() {
 
     const cell = document.createElement('div');
     cell.classList.add('day-cell');
-    cell.textContent = day;
+
+    // Add the day number to the cell
+    const dayNumber = document.createElement('div');
+    dayNumber.classList.add('day-number');
+    dayNumber.textContent = day;
+    cell.appendChild(dayNumber);
 
     // Add games to the day cell if there are any
     if (games[dateString]) {
       cell.classList.add('game');
 
-      // Append game names and scores
-      const gameDetails = games[dateString].map(game => {
-        return `
-          <div class="game-name">${game.name}</div>
-          <div class="game-score">${game.score}</div>
-        `;
-      }).join('');
+      games[dateString].forEach(game => {
+        const gameName = document.createElement('div');
+        gameName.classList.add('game-name');
+        gameName.textContent = game.name;
 
-      cell.innerHTML += gameDetails;
+        const gameScore = document.createElement('div');
+        gameScore.classList.add('game-score');
+        gameScore.textContent = game.score;
+
+        cell.appendChild(gameName);
+        cell.appendChild(gameScore);
+      });
     }
 
     calendarGrid.appendChild(cell);
