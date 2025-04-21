@@ -1,5 +1,5 @@
 const games = {
-  '2025-04-05': ['pickle vs apple - 3-2', 'ahhh vs banana - 4-1'],
+  '2025-04-05': ['Pickle vs Apple - 3-2', 'Ahhh vs Banana - 4-1'],
   '2025-04-10': ['Team C vs Team D - 5-3'],
   '2025-04-12': ['Team E vs Team F - 2-1'],
   // Add more games here as needed
@@ -40,7 +40,8 @@ function renderCalendar() {
     if (games[dateString]) {
       cell.classList.add('game');
       const gamesText = games[dateString].join('<br>');
-      const gamesSpan = document.createElement('span');
+      const gamesSpan = document.createElement('div');
+      gamesSpan.classList.add('game-details');
       gamesSpan.innerHTML = gamesText;
       cell.appendChild(gamesSpan);
     }
