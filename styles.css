@@ -1,92 +1,97 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.calendar-container {
-    width: 80%;
-    max-width: 800px;
-    text-align: center;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#calendarContainer {
+  width: 100%;
+  max-width: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-#prevMonth, #nextMonth {
-    font-size: 24px;
-    cursor: pointer;
+#monthYear {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-h1 {
-    margin: 0;
-    font-size: 24px;
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-.calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-gap: 5px;
+button:hover {
+  background-color: #45a049;
 }
 
-.day-of-week div {
-    font-weight: bold;
-    padding: 10px;
-    background-color: #2d3e50;
-    color: white;
-}
-
-#calendarGrid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-gap: 5px;
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
 }
 
 .day-cell {
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-}
-
-.day-cell.game {
-    background-color: #f9f9f9;
-}
-
-.day-cell span {
-    display: block;
-    font-size: 14px;
-}
-
-.day-cell .score {
-    font-size: 12px;
-    color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 100px;
 }
 
 .day-cell:hover {
-    background-color: #f1f1f1;
+  background-color: #e0e0e0;
 }
 
-.day-cell .games-list {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    font-size: 12px;
-    color: #333;
+.game-info {
+  font-size: 12px;
+  color: #333;
+  text-align: center;
 }
 
-.day-cell .games-list span {
-    display: block;
+.game-info span {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+  #calendarContainer {
+    padding: 10px;
+    max-width: 100%;
+  }
+  
+  button {
+    font-size: 0.8rem;
+    padding: 5px;
+  }
+  
+  .calendar-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
 }
