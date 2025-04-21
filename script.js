@@ -39,7 +39,7 @@ function renderCalendar() {
 
     // Add games to the day cell if there are any
     if (games[dateString]) {
-      const gameList = document.createElement('ul');
+      const gameList = document.createElement('ul'); // Create an unordered list to show multiple games
       games[dateString].forEach(game => {
         const gameItem = document.createElement('li');
         gameItem.textContent = game; // Add each game as a list item
@@ -68,6 +68,8 @@ function changeMonth(delta) {
 
 function showGamesForTonight() {
   const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+  console.log('Today\'s Date:', today); // Debug log to check today's date
+  
   const tonightGames = games[today]; // Get the games for today from the games object
 
   const tonightGamesElement = document.getElementById('tonightGames');
