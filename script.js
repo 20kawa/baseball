@@ -34,11 +34,15 @@ function renderCalendar() {
 
     const cell = document.createElement('div');
     cell.classList.add('day-cell');
-    cell.textContent = day;
+
+    const dateSpan = document.createElement('div');
+    dateSpan.classList.add('date');
+    dateSpan.textContent = day;
+
+    cell.appendChild(dateSpan);
 
     // Add games to the day cell if there are any
     if (games[dateString]) {
-      cell.classList.add('game');
       const gamesText = games[dateString].join('<br>');
       const gamesSpan = document.createElement('div');
       gamesSpan.classList.add('game-details');
