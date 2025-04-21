@@ -1,39 +1,37 @@
 const games = {
     '2025-04-05': [
-        { teams: 'Pickle vs Apple', score: '2 - 3' },
-        { teams: 'Ahhh vs Banana', score: '1 - 4' }
+        { teams: 'Pickle vs Apple', score: '3 - 4' },
+        { teams: 'Ahhh vs Banana', score: '1 - 5' }
     ],
     '2025-04-10': [
-        { teams: 'Team C vs Team D', score: '5 - 6' }
+        { teams: 'Team C vs Team D', score: '7 - 2' }
     ],
     '2025-04-12': [
-        { teams: 'Team E vs Team F', score: '3 - 2' }
+        { teams: 'Team E vs Team F', score: '9 - 6' }
     ],
-    // Add more games as needed
+    // Add more games here
 };
 
-let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ...)
+let currentMonth = 3; // April (0-based index)
 let currentYear = 2025;
 
 function renderCalendar() {
     const monthYear = document.getElementById('monthYear');
     const calendarGrid = document.getElementById('calendarGrid');
 
-    // Set the month and year in the header
     monthYear.textContent = `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
 
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    // Clear previous calendar grid
     calendarGrid.innerHTML = '';
 
-    // Add empty cells before the first day
+    // Empty cells before the first day of the month
     for (let i = 0; i < firstDay; i++) {
         calendarGrid.innerHTML += '<div class="day-cell"></div>';
     }
 
-    // Add day cells for the month
+    // Add the day cells
     for (let day = 1; day <= lastDate; day++) {
         const dayDate = new Date(currentYear, currentMonth, day);
         const dateString = dayDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
@@ -43,18 +41,16 @@ function renderCalendar() {
         cell.textContent = day;
 
         if (games[dateString]) {
+            cell.classList.add('game');
+
+            // Add game details
+            let gameDetails = '<div class="games-list">';
             games[dateString].forEach(game => {
-                const gameElement = document.createElement('div');
-                gameElement.classList.add('game');
-                gameElement.textContent = game.teams;
-
-                const scoreElement = document.createElement('div');
-                scoreElement.classList.add('score');
-                scoreElement.textContent = game.score;
-
-                cell.appendChild(gameElement);
-                cell.appendChild(scoreElement);
+                gameDetails += `<span>${game.teams} - ${game.score}</span>`;
             });
+            gameDetails += '</div>';
+
+            cell.innerHTML = `${day} ${gameDetails}`;
         }
 
         calendarGrid.appendChild(cell);
@@ -65,15 +61,17 @@ function changeMonth(delta) {
     currentMonth += delta;
 
     if (currentMonth < 0) {
-        currentMonth = 11; // Wrap to December
+        currentMonth = 11;
         currentYear--;
     } else if (currentMonth > 11) {
-        currentMonth = 0; // Wrap to January
+        currentMonth = 0;
         currentYear++;
     }
 
     renderCalendar();
 }
 
-// Initial render
+document.getElementById('prevMonth').addEventListener('click', () => changeMonth(-1));
+document.getElementById('nextMonth').addEventListener('click', () => changeMonth(1));
+
 renderCalendar();
