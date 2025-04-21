@@ -1,8 +1,8 @@
 const games = {
-  '2025-04-05': ['pickle vs apple', 'ahhh vs banana'],
-  '2025-04-10': ['Team C vs Team D'],
-  '2025-04-12': ['Team E vs Team F'],
-  // Add more games as needed
+  '2025-04-05': ['pickle vs apple - 3-2', 'ahhh vs banana - 4-1'],
+  '2025-04-10': ['Team C vs Team D - 5-3'],
+  '2025-04-12': ['Team E vs Team F - 2-1'],
+  // Add more games here as needed
 };
 
 let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ...)
@@ -13,7 +13,7 @@ function renderCalendar() {
   const calendarGrid = document.getElementById('calendarGrid');
 
   // Set the month and year in the header
-  monthYear.textContent = `Game Schedule - ${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
+  monthYear.textContent = `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
 
   // Get the first day of the month and the number of days in the month
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -39,9 +39,9 @@ function renderCalendar() {
     // Add games to the day cell if there are any
     if (games[dateString]) {
       cell.classList.add('game');
-      const gamesText = games[dateString].join(', ');
+      const gamesText = games[dateString].join('<br>');
       const gamesSpan = document.createElement('span');
-      gamesSpan.textContent = gamesText;
+      gamesSpan.innerHTML = gamesText;
       cell.appendChild(gamesSpan);
     }
 
