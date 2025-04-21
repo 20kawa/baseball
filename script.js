@@ -1,6 +1,6 @@
 const games = {
   // Example: Format { date: ['Game1', 'Game2'] }
-  '2025-04-05': ['Team A vs Team B'],
+  '2025-04-05': ['pickle vs apple', ahhh vs banana],
   '2025-04-10': ['Team C vs Team D'],
   '2025-04-12': ['Team E vs Team F'],
   // Add more games as needed
