@@ -1,18 +1,17 @@
 /* General styling */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
   margin: 0;
   padding: 0;
 }
 
 .calendar-container {
-  width: 90%;
   max-width: 900px;
   margin: 50px auto;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
 
@@ -26,20 +25,22 @@ body {
 #monthYear {
   font-size: 24px;
   font-weight: bold;
+  color: #333;
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 15px;
-  cursor: pointer;
+  padding: 12px;
   font-size: 18px;
   border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #0056b3;
 }
 
 .calendar-grid {
@@ -51,38 +52,44 @@ button:hover {
 .day-cell {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  background-color: #fff;
-  padding: 15px;
+  background-color: #ffffff;
+  padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   position: relative;
-  min-height: 80px;
+  min-height: 100px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
 .day-cell:hover {
-  background-color: #e6f7ff;
+  background-color: #f1f1f1;
+  transform: scale(1.05);
 }
 
 .day-cell.game {
-  background-color: #f9f9f9;
+  background-color: #eff6ff;
+  padding-bottom: 12px;
 }
 
-.day-cell .game-name {
-  font-size: 14px;
+.day-number {
+  font-size: 18px;
   font-weight: bold;
   color: #333;
-  margin-bottom: 5px;
 }
 
-.day-cell .game-score {
+.game-name {
+  font-size: 14px;
+  color: #444;
+  margin-top: 5px;
+}
+
+.game-score {
   font-size: 12px;
-  color: #666;
-}
-
-.day-cell .game-name, .day-cell .game-score {
-  text-align: center;
+  color: #888;
+  margin-top: 2px;
+  font-weight: bold;
 }
