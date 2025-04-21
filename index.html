@@ -4,33 +4,181 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Schedule Calendar</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #calendar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        #calendarHeader {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px;
+            background-color: #2c3e50;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        #calendarGrid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .day-cell {
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 0.9em;
+            min-height: 100px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+        }
+
+        .day-cell span {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .day-cell .game {
+            margin-top: 5px;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .day-cell .score {
+            font-size: 1em;
+            color: #3498db;
+            margin-top: 10px;
+        }
+
+        #prevMonth, #nextMonth {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #prevMonth:hover, #nextMonth:hover {
+            background-color: #3498db;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="calendar-container">
-        <div class="calendar-header">
-            <button id="prevMonth" class="nav-btn">Prev</button>
-            <h2 id="monthYear">April 2025</h2>
-            <button id="nextMonth" class="nav-btn">Next</button>
-        </div>
-
-        <div class="calendar-days">
-            <div class="calendar-day-name">Sun</div>
-            <div class="calendar-day-name">Mon</div>
-            <div class="calendar-day-name">Tue</div>
-            <div class="calendar-day-name">Wed</div>
-            <div class="calendar-day-name">Thu</div>
-            <div class="calendar-day-name">Fri</div>
-            <div class="calendar-day-name">Sat</div>
-        </div>
-
-        <div id="calendarGrid" class="calendar-grid">
-            <!-- Calendar days will be populated here -->
-        </div>
+<div id="calendar">
+    <div id="calendarHeader">
+        <button id="prevMonth">←</button>
+        <div id="monthYear"></div>
+        <button id="nextMonth">→</button>
     </div>
+    <div id="calendarGrid"></div>
+</div>
 
-    <script src="script.js"></script>
+<script>
+    const games = {
+        '2025-04-05': [
+            { teams: 'Pickle vs Apple', score: '2 - 3' },
+            { teams: 'Ahhh vs Banana', score: '1 - 4' }
+        ],
+        '2025-04-10': [
+            { teams: 'Team C vs Team D', score: '5 - 6' }
+        ],
+        '2025-04-12': [
+            { teams: 'Team E vs Team F', score: '3 - 2' }
+        ],
+        // Add more games as needed
+    };
+
+    let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ...)
+    let currentYear = 2025;
+
+    function renderCalendar() {
+        const monthYear = document.getElementById('monthYear');
+        const calendarGrid = document.getElementById('calendarGrid');
+
+        // Set the month and year in the header
+        monthYear.textContent = `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
+
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        // Clear previous calendar grid
+        calendarGrid.innerHTML = '';
+
+        // Add empty cells before the first day
+        for (let i = 0; i < firstDay; i++) {
+            calendarGrid.innerHTML += '<div class="day-cell"></div>';
+        }
+
+        // Add day cells for the month
+        for (let day = 1; day <= lastDate; day++) {
+            const dayDate = new Date(currentYear, currentMonth, day);
+            const dateString = dayDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+            const cell = document.createElement('div');
+            cell.classList.add('day-cell');
+            cell.textContent = day;
+
+            if (games[dateString]) {
+                games[dateString].forEach(game => {
+                    const gameElement = document.createElement('div');
+                    gameElement.classList.add('game');
+                    gameElement.textContent = game.teams;
+
+                    const scoreElement = document.createElement('div');
+                    scoreElement.classList.add('score');
+                    scoreElement.textContent = game.score;
+
+                    cell.appendChild(gameElement);
+                    cell.appendChild(scoreElement);
+                });
+            }
+
+            calendarGrid.appendChild(cell);
+        }
+    }
+
+    function changeMonth(delta) {
+        currentMonth += delta;
+
+        if (currentMonth < 0) {
+            currentMonth = 11; // Wrap to December
+            currentYear--;
+        } else if (currentMonth > 11) {
+            currentMonth = 0; // Wrap to January
+            currentYear++;
+        }
+
+        renderCalendar();
+    }
+
+    // Initial render
+    renderCalendar();
+
+    document.getElementById('prevMonth').addEventListener('click', () => changeMonth(-1));
+    document.getElementById('nextMonth').addEventListener('click', () => changeMonth(1));
+</script>
+
 </body>
 </html>
-
