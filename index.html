@@ -1,21 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Schedule Calendar</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="calendar-container">
-    <div class="calendar-header">
-      <button id="prevMonth" onclick="changeMonth(-1)">&#8249;</button>
-      <h2 id="monthYear">Game Schedule - April 2025</h2>
-      <button id="nextMonth" onclick="changeMonth(1)">&#8250;</button>
-    </div>
-    <div id="calendarGrid" class="calendar-grid"></div>
-  </div>
 
-  <script src="script.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game Schedule Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #3e8e41;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-gap: 5px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .day-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            font-size: 16px;
+        }
+
+        .day-cell.game {
+            background-color: #c2f0c2;
+        }
+
+        .game-info {
+            position: absolute;
+            bottom: 5px;
+            font-size: 12px;
+            color: #333;
+            text-align: center;
+        }
+
+        .calendar-btn {
+            padding: 10px;
+            background-color: #3e8e41;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .calendar-btn:hover {
+            background-color: #45a049;
+        }
+
+        .month-year {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .month-year span {
+            font-size: 24px;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .calendar {
+                grid-template-columns: repeat(7, 1fr);
+                padding: 10px;
+            }
+
+            .day-cell {
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        Game Schedule Calendar
+    </header>
+
+    <div class="month-year">
+        <button class="calendar-btn" onclick="changeMonth(-1)">Prev</button>
+        <span id="monthYear"></span>
+        <button class="calendar-btn" onclick="changeMonth(1)">Next</button>
+    </div>
+
+    <div class="calendar" id="calendarGrid"></div>
+
+    <script>
+        const games = {
+            '2025-04-05': ['Pickle vs Apple', 'Ahhh vs Banana'],
+            '2025-04-10': ['Team C vs Team D'],
+            '2025-04-12': ['Team E vs Team F'],
+        };
+
+        let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ... )
+        let currentYear = 2025;
+
+        function renderCalendar() {
+            const monthYear = document.getElementById('monthYear');
+            const calendarGrid = document.getElementById('calendarGrid');
+
+            // Set the month and year in the header
+            monthYear.textContent = `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
+
+            // Get the first day of the month and the number of days in the month
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            // Clear previous calendar grid
+            calendarGrid.innerHTML = '';
+
+            // Add empty cells before the first day
+            for (let i = 0; i < firstDay; i++) {
+                calendarGrid.innerHTML += '<div class="day-cell"></div>';
+            }
+
+            // Add day cells for the month
+            for (let day = 1; day <= lastDate; day++) {
+                const dayDate = new Date(currentYear, currentMonth, day);
+                const dateString = dayDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+                const cell = document.createElement('div');
+                cell.classList.add('day-cell');
+                cell.textContent = day;
+
+                // Add games to the day cell if there are any
+                if (games[dateString]) {
+                    cell.classList.add('game');
+                    // Add game names below the date in the day cell
+                    const gameInfo = document.createElement('div');
+                    gameInfo.classList.add('game-info');
+                    gameInfo.textContent = games[dateString].join(' | '); // Show games on the same day
+                    cell.appendChild(gameInfo);
+                }
+
+                calendarGrid.appendChild(cell);
+            }
+        }
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+
+            if (currentMonth < 0) {
+                currentMonth = 11; // Wrap to December
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0; // Wrap to January
+                currentYear++;
+            }
+
+            renderCalendar();
+        }
+
+        // Initial render
+        renderCalendar();
+    </script>
 </body>
+
 </html>
