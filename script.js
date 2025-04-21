@@ -1,5 +1,5 @@
 const games = {
-  // Ensure dates are formatted as YYYY-MM-DD
+  // Use the correct date and game names you want to display
   '2025-04-05': ['pickle vs apple', 'ahhh vs banana'],
   '2025-04-10': ['Team C vs Team D'],
   '2025-04-12': ['Team E vs Team F'],
@@ -39,8 +39,13 @@ function renderCalendar() {
 
     // Add games to the day cell if there are any
     if (games[dateString]) {
-      cell.classList.add('game');
-      cell.title = games[dateString].join(', '); // Show games on hover
+      const gameList = document.createElement('ul');
+      games[dateString].forEach(game => {
+        const gameItem = document.createElement('li');
+        gameItem.textContent = game; // Add each game as a list item
+        gameList.appendChild(gameItem);
+      });
+      cell.appendChild(gameList); // Append the game list to the day cell
     }
 
     calendarGrid.appendChild(cell);
@@ -63,14 +68,12 @@ function changeMonth(delta) {
 
 function showGamesForTonight() {
   const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-  console.log("Today's Date:", today); // Debug log to check today's date
-  
   const tonightGames = games[today]; // Get the games for today from the games object
 
   const tonightGamesElement = document.getElementById('tonightGames');
   if (tonightGames) {
     // Join the games and display them
-    tonightGamesElement.textContent = tonightGames.join(', ');
+    tonightGamesElement.textContent = tonightGames.join(', '); 
   } else {
     tonightGamesElement.textContent = 'No games today.'; // If no games are scheduled for today
   }
