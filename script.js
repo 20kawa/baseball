@@ -1,7 +1,7 @@
 const games = {
-    '2025-04-05': ['Pickle vs Apple 10:00 AM', 'Ahhh vs Banana 2:00 PM'],
-    '2025-04-10': ['Team C vs Team D 3:00 PM'],
-    '2025-04-12': ['Team E vs Team F 1:00 PM'],
+    '2025-04-05': ['Team A vs Team B 10:00 AM', 'Team C vs Team D 2:00 PM'],
+    '2025-04-10': ['Team E vs Team F 3:00 PM'],
+    '2025-04-12': ['Team G vs Team H 1:00 PM'],
     // Add more games as needed
 };
 
@@ -42,7 +42,6 @@ function renderCalendar() {
 
         // Add games to the day cell if there are any
         if (games[dateString]) {
-            cell.classList.add('game');
             games[dateString].forEach(game => {
                 const gameText = document.createElement('span');
                 gameText.textContent = game;
