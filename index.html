@@ -1,213 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Game Schedule Calendar</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Schedule</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
 
-        header {
-            background-color: #3e8e41;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            font-size: 24px;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-        .month-year {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
 
-        .month-year span {
-            font-size: 24px;
-        }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+      grid-auto-rows: 100px;
+    }
 
-        .calendar-btn {
-            padding: 10px;
-            background-color: #3e8e41;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+    .calendar .day-cell {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+      box-sizing: border-box;
+      position: relative;
+    }
 
-        .calendar-btn:hover {
-            background-color: #45a049;
-        }
+    .calendar .day-cell.game {
+      background-color: #ffe0e0;
+      cursor: pointer;
+    }
 
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-gap: 10px;
-            padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
+    .calendar .day-cell .game-info {
+      font-size: 14px;
+      margin-top: 10px;
+    }
 
-        .day-cell {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            cursor: pointer;
-            position: relative;
-            font-size: 18px;
-            height: 100px;
-            overflow: hidden;
-        }
+    .calendar .day-cell.game .game-info span {
+      display: block;
+      margin-bottom: 5px;
+    }
 
-        .day-cell.game {
-            background-color: #c2f0c2;
-            text-align: center;
-        }
+    .game-title {
+      font-weight: bold;
+      color: #444;
+    }
 
-        .game-info {
-            position: absolute;
-            bottom: 5px;
-            font-size: 12px;
-            color: #333;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-        }
+    .game-score {
+      color: #008000;
+    }
 
-        .game-info span {
-            display: block;
-            font-size: 12px;
-            color: #333;
-        }
+    .month-year {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        /* Responsive styles */
-        @media screen and (max-width: 768px) {
-            .calendar {
-                grid-template-columns: repeat(7, 1fr);
-                padding: 10px;
-            }
+    .score {
+      display: flex;
+      justify-content: space-between;
+    }
 
-            .day-cell {
-                font-size: 14px;
-                padding: 8px;
-                height: auto;
-                overflow: visible;
-            }
+    .score .team {
+      font-weight: bold;
+    }
 
-            .game-info {
-                font-size: 10px;
-                padding: 2px;
-            }
-        }
-    </style>
+    .score .score-value {
+      color: #008000;
+    }
+
+    .day-cell p {
+      font-size: 16px;
+      color: #444;
+    }
+  </style>
 </head>
-
 <body>
-    <header>
-        Game Schedule Calendar
-    </header>
 
-    <div class="month-year">
-        <button class="calendar-btn" onclick="changeMonth(-1)">Prev</button>
-        <span id="monthYear"></span>
-        <button class="calendar-btn" onclick="changeMonth(1)">Next</button>
-    </div>
-
+  <div class="container">
+    <h1>Game Schedule</h1>
+    <div class="month-year" id="monthYear"></div>
     <div class="calendar" id="calendarGrid"></div>
+  </div>
 
-    <script>
-        const games = {
-            '2025-04-05': [
-                { match: 'Pickle vs Apple', score: '3-2' },
-                { match: 'Ahhh vs Banana', score: '1-1' }
-            ],
-            '2025-04-10': [
-                { match: 'Team C vs Team D', score: '4-5' }
-            ],
-            '2025-04-12': [
-                { match: 'Team E vs Team F', score: '2-3' }
-            ],
-        };
+  <script>
+    const games = {
+      // Use the correct date and game names you want to display
+      '2025-04-05': [
+        { game: 'pickle vs apple', score: '2-1' },
+        { game: 'ahhh vs banana', score: '3-3' }
+      ],
+      '2025-04-10': [
+        { game: 'Team C vs Team D', score: '1-0' }
+      ],
+      '2025-04-12': [
+        { game: 'Team E vs Team F', score: '4-5' }
+      ],
+      // Add more games as needed
+    };
 
-        let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ... )
-        let currentYear = 2025;
+    let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ...)
+    let currentYear = 2025;
 
-        function renderCalendar() {
-            const monthYear = document.getElementById('monthYear');
-            const calendarGrid = document.getElementById('calendarGrid');
+    function renderCalendar() {
+      const monthYear = document.getElementById('monthYear');
+      const calendarGrid = document.getElementById('calendarGrid');
 
-            // Set the month and year in the header
-            monthYear.textContent = `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
+      // Set the month and year in the header
+      monthYear.textContent = `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
 
-            // Get the first day of the month and the number of days in the month
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+      // Get the first day of the month and the number of days in the month
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-            // Clear previous calendar grid
-            calendarGrid.innerHTML = '';
+      // Clear previous calendar grid
+      calendarGrid.innerHTML = '';
 
-            // Add empty cells before the first day
-            for (let i = 0; i < firstDay; i++) {
-                calendarGrid.innerHTML += '<div class="day-cell"></div>';
-            }
+      // Add empty cells before the first day
+      for (let i = 0; i < firstDay; i++) {
+        calendarGrid.innerHTML += '<div class="day-cell"></div>';
+      }
 
-            // Add day cells for the month
-            for (let day = 1; day <= lastDate; day++) {
-                const dayDate = new Date(currentYear, currentMonth, day);
-                const dateString = dayDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
+      // Add day cells for the month
+      for (let day = 1; day <= lastDate; day++) {
+        const dayDate = new Date(currentYear, currentMonth, day);
+        const dateString = dayDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
 
-                const cell = document.createElement('div');
-                cell.classList.add('day-cell');
-                cell.textContent = day;
+        const cell = document.createElement('div');
+        cell.classList.add('day-cell');
+        cell.textContent = day;
 
-                // Add games to the day cell if there are any
-                if (games[dateString]) {
-                    cell.classList.add('game');
-                    // Add game names and scores below the date in the day cell
-                    const gameInfo = document.createElement('div');
-                    gameInfo.classList.add('game-info');
-                    gameInfo.innerHTML = games[dateString].map(game => `${game.match}: <strong>${game.score}</strong>`).join('<br />'); // Show games with scores on the same day
-                    cell.appendChild(gameInfo);
-                }
-
-                calendarGrid.appendChild(cell);
-            }
+        // Add games to the day cell if there are any
+        if (games[dateString]) {
+          cell.classList.add('game');
+          games[dateString].forEach(game => {
+            const gameInfo = document.createElement('div');
+            gameInfo.classList.add('game-info');
+            gameInfo.innerHTML = `<span class="game-title">${game.game}</span><span class="game-score">${game.score}</span>`;
+            cell.appendChild(gameInfo);
+          });
         }
 
-        function changeMonth(delta) {
-            currentMonth += delta;
+        calendarGrid.appendChild(cell);
+      }
+    }
 
-            if (currentMonth < 0) {
-                currentMonth = 11; // Wrap to December
-                currentYear--;
-            } else if (currentMonth > 11) {
-                currentMonth = 0; // Wrap to January
-                currentYear++;
-            }
+    function changeMonth(delta) {
+      currentMonth += delta;
 
-            renderCalendar();
-        }
+      if (currentMonth < 0) {
+        currentMonth = 11; // Wrap to December
+        currentYear--;
+      } else if (currentMonth > 11) {
+        currentMonth = 0; // Wrap to January
+        currentYear++;
+      }
 
-        // Initial render
-        renderCalendar();
-    </script>
+      renderCalendar();
+    }
+
+    // Initial render
+    renderCalendar();
+  </script>
 </body>
-
 </html>
+
