@@ -8,6 +8,9 @@ const games = {
     ],
     '2025-04-12': [
         { teams: 'Team E vs Team F', score: '9 - 6' }
+
+        '2025-04-20': [
+        { teams: 'Kaden vs Ireland', score: '90 - 2' }
     ],
     // Add more games here
 };
