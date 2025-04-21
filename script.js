@@ -1,14 +1,7 @@
 const games = {
-  '2025-04-05': [
-    { name: 'pickle vs apple', score: '5-3' },
-    { name: 'ahhh vs banana', score: '2-4' }
-  ],
-  '2025-04-10': [
-    { name: 'Team C vs Team D', score: '7-2' }
-  ],
-  '2025-04-12': [
-    { name: 'Team E vs Team F', score: '3-3' }
-  ],
+  '2025-04-05': ['pickle vs apple', 'ahhh vs banana'],
+  '2025-04-10': ['Team C vs Team D'],
+  '2025-04-12': ['Team E vs Team F'],
   // Add more games as needed
 };
 
@@ -41,29 +34,15 @@ function renderCalendar() {
 
     const cell = document.createElement('div');
     cell.classList.add('day-cell');
-
-    // Add the day number to the cell
-    const dayNumber = document.createElement('div');
-    dayNumber.classList.add('day-number');
-    dayNumber.textContent = day;
-    cell.appendChild(dayNumber);
+    cell.textContent = day;
 
     // Add games to the day cell if there are any
     if (games[dateString]) {
       cell.classList.add('game');
-
-      games[dateString].forEach(game => {
-        const gameName = document.createElement('div');
-        gameName.classList.add('game-name');
-        gameName.textContent = game.name;
-
-        const gameScore = document.createElement('div');
-        gameScore.classList.add('game-score');
-        gameScore.textContent = game.score;
-
-        cell.appendChild(gameName);
-        cell.appendChild(gameScore);
-      });
+      const gamesText = games[dateString].join(', ');
+      const gamesSpan = document.createElement('span');
+      gamesSpan.textContent = gamesText;
+      cell.appendChild(gamesSpan);
     }
 
     calendarGrid.appendChild(cell);
