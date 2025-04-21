@@ -63,13 +63,16 @@ function changeMonth(delta) {
 
 function showGamesForTonight() {
   const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-  const tonightGames = games[today];
+  console.log('Today\'s Date:', today); // Debug log to check today's date
+  
+  const tonightGames = games[today]; // Get the games for today from the games object
 
   const tonightGamesElement = document.getElementById('tonightGames');
   if (tonightGames) {
-    tonightGamesElement.textContent = tonightGames.join(', ');
+    // Join the games and display them
+    tonightGamesElement.textContent = tonightGames.join(', '); 
   } else {
-    tonightGamesElement.textContent = 'No games today.';
+    tonightGamesElement.textContent = 'No games today.'; // If no games are scheduled for today
   }
 }
 
