@@ -13,6 +13,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  overflow: hidden;
 }
 
 .calendar-header {
@@ -20,12 +21,16 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 #monthYear {
   font-size: 24px;
   font-weight: bold;
   color: #333;
+  flex-grow: 1; /* Make the title grow in available space */
+  text-align: center;
+  margin: 10px 0;
 }
 
 button {
@@ -37,6 +42,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  flex-shrink: 0; /* Prevent buttons from shrinking */
 }
 
 button:hover {
@@ -93,3 +99,32 @@ button:hover {
   margin-top: 2px;
   font-weight: bold;
 }
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .calendar-header {
+    flex-direction: column;
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(3, 1fr); /* Show only 3 columns on small screens */
+  }
+
+  .day-number {
+    font-size: 16px;
+  }
+
+  .game-name {
+    font-size: 12px;
+  }
+
+  .game-score {
+    font-size: 10px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 10px;
+  }
+}
+
