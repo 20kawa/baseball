@@ -1,18 +1,23 @@
+// Game data structure (manually input games and scores)
 const games = {
-    '2025-04-05': ['Team A vs Team B 10:00 AM', 'Team C vs Team D 2:00 PM'],
-    '2025-04-10': ['Team E vs Team F 3:00 PM'],
-    '2025-04-12': ['Team G vs Team H 1:00 PM'],
-    // Add more games as needed
+    '2025-04-05': [
+        { teams: 'Pickle vs Apple', score: '5-3' },
+        { teams: 'Ahhh vs Banana', score: '7-2' }
+    ],
+    '2025-04-10': [
+        { teams: 'Team C vs Team D', score: '3-1' }
+    ],
+    '2025-04-12': [
+        { teams: 'Team E vs Team F', score: '6-4' }
+    ]
 };
 
-let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ... )
+let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ...), April is 3
 let currentYear = 2025;
 
 function renderCalendar() {
     const monthYear = document.getElementById('monthYear');
     const calendarGrid = document.getElementById('calendarGrid');
-
-    // Set the month and year in the header
     monthYear.textContent = `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
 
     // Get the first day of the month and the number of days in the month
@@ -34,18 +39,15 @@ function renderCalendar() {
 
         const cell = document.createElement('div');
         cell.classList.add('day-cell');
-
-        // Display the day number
-        const dayText = document.createElement('span');
-        dayText.textContent = day;
-        cell.appendChild(dayText);
+        cell.textContent = day;
 
         // Add games to the day cell if there are any
         if (games[dateString]) {
             games[dateString].forEach(game => {
-                const gameText = document.createElement('span');
-                gameText.textContent = game;
-                cell.appendChild(gameText);
+                const gameElement = document.createElement('span');
+                gameElement.classList.add('game');
+                gameElement.textContent = `${game.teams} - ${game.score}`;
+                cell.appendChild(gameElement);
             });
         }
 
@@ -67,9 +69,9 @@ function changeMonth(delta) {
     renderCalendar();
 }
 
-// Initial render
-renderCalendar();
-
 // Event listeners for month navigation buttons
 document.getElementById('prevMonth').addEventListener('click', () => changeMonth(-1));
 document.getElementById('nextMonth').addEventListener('click', () => changeMonth(1));
+
+// Initial render
+renderCalendar();
