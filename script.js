@@ -1,8 +1,14 @@
 const games = {
-  // Example: Format { date: ['Game1', 'Game2'] }
-  '2025-04-05': ['pickle vs apple', 'ahhh vs banana'],
-  '2025-04-10': ['Team C vs Team D'],
-  '2025-04-12': ['Team E vs Team F'],
+  '2025-04-05': [
+    { name: 'pickle vs apple', score: '5-3' },
+    { name: 'ahhh vs banana', score: '2-4' }
+  ],
+  '2025-04-10': [
+    { name: 'Team C vs Team D', score: '7-2' }
+  ],
+  '2025-04-12': [
+    { name: 'Team E vs Team F', score: '3-3' }
+  ],
   // Add more games as needed
 };
 
@@ -40,7 +46,13 @@ function renderCalendar() {
     // Add games to the day cell if there are any
     if (games[dateString]) {
       cell.classList.add('game');
-      cell.innerHTML += `<br>${games[dateString].join('<br>')}`; // Show games directly in the cell
+
+      // Append game names and scores
+      const gameDetails = games[dateString].map(game => {
+        return `<div class="game-name">${game.name}</div><div class="game-score">${game.score}</div>`;
+      }).join('');
+
+      cell.innerHTML += gameDetails;
     }
 
     calendarGrid.appendChild(cell);
@@ -61,21 +73,5 @@ function changeMonth(delta) {
   renderCalendar();
 }
 
-function showGamesForTonight() {
-  const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-  console.log('Today\'s Date:', today); // Debug log to check today's date
-  
-  const tonightGames = games[today]; // Get the games for today from the games object
-
-  const tonightGamesElement = document.getElementById('tonightGames');
-  if (tonightGames) {
-    // Join the games and display them
-    tonightGamesElement.textContent = tonightGames.join(', '); 
-  } else {
-    tonightGamesElement.textContent = 'No games today.'; // If no games are scheduled for today
-  }
-}
-
 // Initial render
 renderCalendar();
-showGamesForTonight();
