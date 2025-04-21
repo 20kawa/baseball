@@ -64,4 +64,25 @@ button:hover {
 }
 
 .day-cell:hover {
-  background-color: #
+  background-color: #e6f7ff;
+}
+
+.day-cell.game {
+  background-color: #f9f9f9;
+}
+
+.day-cell .game-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.day-cell .game-score {
+  font-size: 12px;
+  color: #666;
+}
+
+.day-cell .game-name, .day-cell .game-score {
+  text-align: center;
+}
