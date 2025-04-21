@@ -1,5 +1,5 @@
 const games = {
-  // Use the correct date and game names you want to display
+  // Example: Format { date: ['Game1', 'Game2'] }
   '2025-04-05': ['pickle vs apple', 'ahhh vs banana'],
   '2025-04-10': ['Team C vs Team D'],
   '2025-04-12': ['Team E vs Team F'],
@@ -39,13 +39,8 @@ function renderCalendar() {
 
     // Add games to the day cell if there are any
     if (games[dateString]) {
-      const gameList = document.createElement('ul'); // Create an unordered list to show multiple games
-      games[dateString].forEach(game => {
-        const gameItem = document.createElement('li');
-        gameItem.textContent = game; // Add each game as a list item
-        gameList.appendChild(gameItem);
-      });
-      cell.appendChild(gameList); // Append the game list to the day cell
+      cell.classList.add('game');
+      cell.innerHTML += `<br>${games[dateString].join('<br>')}`; // Show games directly in the cell
     }
 
     calendarGrid.appendChild(cell);
