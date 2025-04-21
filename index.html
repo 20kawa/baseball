@@ -10,7 +10,15 @@
 
   <div class="container">
     <h1>Game Schedule</h1>
-    <div id="monthYear" class="month-year"></div>
+
+    <!-- Navigation to change month -->
+    <div class="navigation">
+      <button onclick="changeMonth(-1)">Previous</button>
+      <div id="monthYear" class="month-year"></div>
+      <button onclick="changeMonth(1)">Next</button>
+    </div>
+
+    <!-- Calendar grid to show games -->
     <div id="calendarGrid" class="calendar-grid"></div>
   </div>
 
