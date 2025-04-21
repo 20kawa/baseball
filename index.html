@@ -10,8 +10,8 @@
 
   <div class="calendar">
     <header>
-      <h1>Game Schedule - April 2025</h1>
-      <p>Games for Tonight: <span id="tonightGames">No games scheduled</span></p>
+      <h1 id="monthYear">Game Schedule - April 2025</h1>
+      <p>Games for Tonight: <span id="tonightGames"></span></p>
     </header>
     
     <div class="calendar-header">
@@ -24,8 +24,13 @@
       <span class="calendar-cell">Sat</span>
     </div>
     
-    <div class="calendar-grid">
+    <div class="calendar-grid" id="calendarGrid">
       <!-- Calendar days will be inserted dynamically by JavaScript -->
+    </div>
+
+    <div class="navigation">
+      <button id="prevMonth" onclick="changeMonth(-1)">Prev</button>
+      <button id="nextMonth" onclick="changeMonth(1)">Next</button>
     </div>
   </div>
 
