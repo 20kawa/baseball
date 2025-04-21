@@ -49,7 +49,10 @@ function renderCalendar() {
 
       // Append game names and scores
       const gameDetails = games[dateString].map(game => {
-        return `<div class="game-name">${game.name}</div><div class="game-score">${game.score}</div>`;
+        return `
+          <div class="game-name">${game.name}</div>
+          <div class="game-score">${game.score}</div>
+        `;
       }).join('');
 
       cell.innerHTML += gameDetails;
