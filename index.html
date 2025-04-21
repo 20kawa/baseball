@@ -1,27 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Schedule</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Schedule</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <div class="container">
-    <h1>Game Schedule</h1>
-
-    <!-- Navigation to change month -->
-    <div class="navigation">
-      <button onclick="changeMonth(-1)">Previous</button>
-      <div id="monthYear" class="month-year"></div>
-      <button onclick="changeMonth(1)">Next</button>
+    <div class="calendar-container">
+        <div class="header">
+            <button id="prevMonth" class="nav-btn">◄</button>
+            <h1 id="monthYear"></h1>
+            <button id="nextMonth" class="nav-btn">►</button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
     </div>
 
-    <!-- Calendar grid to show games -->
-    <div id="calendarGrid" class="calendar-grid"></div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
