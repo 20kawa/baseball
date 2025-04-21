@@ -4,115 +4,137 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Game Schedule</title>
-  <link rel="stylesheet" href="styles.css">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
       margin: 0;
       padding: 0;
+      background-color: #f4f4f4;
     }
 
-    .container {
-      max-width: 1200px;
+    #calendar {
+      max-width: 900px;
       margin: 0 auto;
+      background-color: #fff;
       padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
       text-align: center;
-      color: #333;
-    }
-
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 10px;
-      margin-top: 20px;
-      grid-auto-rows: 100px;
-    }
-
-    .calendar .day-cell {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-      font-size: 16px;
-      box-sizing: border-box;
-      position: relative;
-    }
-
-    .calendar .day-cell.game {
-      background-color: #ffe0e0;
-      cursor: pointer;
-    }
-
-    .calendar .day-cell .game-info {
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    .calendar .day-cell.game .game-info span {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .game-title {
-      font-weight: bold;
-      color: #444;
-    }
-
-    .game-score {
-      color: #008000;
-    }
-
-    .month-year {
       font-size: 24px;
-      text-align: center;
       margin-bottom: 20px;
     }
 
-    .score {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .score .team {
+    #monthYear {
+      font-size: 20px;
       font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
-    .score .score-value {
-      color: #008000;
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 10px;
+      justify-items: center;
+      margin-bottom: 20px;
     }
 
-    .day-cell p {
-      font-size: 16px;
-      color: #444;
+    .day-cell {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      background-color: #fff;
+      transition: background-color 0.3s ease;
+      position: relative;
+      padding: 5px;
+      text-align: center;
+    }
+
+    .day-cell.game {
+      background-color: #e0f7fa;
+      color: #00796b;
+    }
+
+    .day-cell.game:hover {
+      background-color: #b2ebf2;
+    }
+
+    .game-info {
+      font-size: 12px;
+      color: #00796b;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .day-cell span {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .calendar-grid {
+        grid-template-columns: repeat(7, 1fr);
+        grid-gap: 8px;
+      }
+
+      .day-cell {
+        width: 40px;
+        height: 40px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .calendar-grid {
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      .day-cell {
+        width: 35px;
+        height: 35px;
+        font-size: 10px;
+      }
+
+      .day-cell span {
+        font-size: 12px;
+      }
+
+      #monthYear {
+        font-size: 18px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <div id="calendar">
     <h1>Game Schedule</h1>
-    <div class="month-year" id="monthYear"></div>
-    <div class="calendar" id="calendarGrid"></div>
+    <div id="monthYear"></div>
+    <div class="calendar-grid" id="calendarGrid"></div>
   </div>
 
   <script>
     const games = {
-      // Use the correct date and game names you want to display
-      '2025-04-05': [
-        { game: 'pickle vs apple', score: '2-1' },
-        { game: 'ahhh vs banana', score: '3-3' }
-      ],
-      '2025-04-10': [
-        { game: 'Team C vs Team D', score: '1-0' }
-      ],
-      '2025-04-12': [
-        { game: 'Team E vs Team F', score: '4-5' }
-      ],
-      // Add more games as needed
+      '2025-04-05': ['Pickle vs Apple: 2-3', 'Ahhh vs Banana: 4-1'],
+      '2025-04-10': ['Team C vs Team D: 1-1'],
+      '2025-04-12': ['Team E vs Team F: 0-2'],
     };
 
     let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ...)
@@ -123,7 +145,7 @@
       const calendarGrid = document.getElementById('calendarGrid');
 
       // Set the month and year in the header
-      monthYear.textContent = `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
+      monthYear.textContent = `Game Schedule - ${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
 
       // Get the first day of the month and the number of days in the month
       const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -149,12 +171,11 @@
         // Add games to the day cell if there are any
         if (games[dateString]) {
           cell.classList.add('game');
-          games[dateString].forEach(game => {
-            const gameInfo = document.createElement('div');
-            gameInfo.classList.add('game-info');
-            gameInfo.innerHTML = `<span class="game-title">${game.game}</span><span class="game-score">${game.score}</span>`;
-            cell.appendChild(gameInfo);
-          });
+          // Display game names and scores inside the day cell
+          const gameInfo = document.createElement('div');
+          gameInfo.classList.add('game-info');
+          gameInfo.textContent = games[dateString].join(', ');
+          cell.appendChild(gameInfo);
         }
 
         calendarGrid.appendChild(cell);
@@ -180,4 +201,3 @@
   </script>
 </body>
 </html>
-
