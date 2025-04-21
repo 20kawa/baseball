@@ -2,7 +2,7 @@ const games = {
   '2025-04-05': ['Pickle vs Apple - 3-2', 'Ahhh vs Banana - 4-1'],
   '2025-04-10': ['Team C vs Team D - 5-3'],
   '2025-04-12': ['Team E vs Team F - 2-1'],
-  // Add more games here as needed
+  // Add more games as needed
 };
 
 let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ...)
