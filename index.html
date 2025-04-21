@@ -3,162 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Calendar</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f5f5f5;
-    }
-
-    #calendar-container {
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      max-width: 700px;
-      width: 100%;
-      text-align: center;
-    }
-
-    #monthYear {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-gap: 10px;
-      padding: 20px 0;
-    }
-
-    .day-cell {
-      background-color: #f0f0f0;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
-      font-size: 16px;
-      min-height: 60px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-    }
-
-    .day-cell.empty {
-      background-color: transparent;
-    }
-
-    .game-list {
-      margin-top: 10px;
-      font-size: 12px;
-    }
-
-    .game-item {
-      background-color: #2c3e50;
-      color: white;
-      padding: 5px;
-      border-radius: 5px;
-      margin-bottom: 5px;
-    }
-
-    .tonight-games {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-  </style>
+  <title>Game Schedule Calendar</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="calendar-container">
-    <h2 id="monthYear"></h2>
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <button id="prevMonth" onclick="changeMonth(-1)">&#8249;</button>
+      <h2 id="monthYear">Game Schedule - April 2025</h2>
+      <button id="nextMonth" onclick="changeMonth(1)">&#8250;</button>
+    </div>
     <div id="calendarGrid" class="calendar-grid"></div>
-    <div id="tonightGames" class="tonight-games"></div>
   </div>
 
-  <script>
-    const games = {
-      '2025-04-05': ['Pickle vs Apple', 'Ahhh vs Banana'],
-      '2025-04-10': ['Team C vs Team D'],
-      '2025-04-12': ['Team E vs Team F'],
-    };
-
-    let currentMonth = 3; // April (0-based index: 0 = January, 1 = February, ...)
-    let currentYear = 2025;
-
-    function renderCalendar() {
-      const monthYear = document.getElementById('monthYear');
-      const calendarGrid = document.getElementById('calendarGrid');
-
-      monthYear.textContent = `Game Schedule - ${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
-
-      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-      const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-      calendarGrid.innerHTML = '';
-
-      for (let i = 0; i < firstDay; i++) {
-        calendarGrid.innerHTML += '<div class="day-cell empty"></div>';
-      }
-
-      for (let day = 1; day <= lastDate; day++) {
-        const dayDate = new Date(currentYear, currentMonth, day);
-        const dateString = dayDate.toISOString().split('T')[0];
-
-        const cell = document.createElement('div');
-        cell.classList.add('day-cell');
-        cell.textContent = day;
-
-        if (games[dateString]) {
-          const gameList = document.createElement('div');
-          gameList.classList.add('game-list');
-          games[dateString].forEach(game => {
-            const gameItem = document.createElement('div');
-            gameItem.classList.add('game-item');
-            gameItem.textContent = game;
-            gameList.appendChild(gameItem);
-          });
-          cell.appendChild(gameList);
-        }
-
-        calendarGrid.appendChild(cell);
-      }
-    }
-
-    function changeMonth(delta) {
-      currentMonth += delta;
-
-      if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-      } else if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-      }
-
-      renderCalendar();
-    }
-
-    function showGamesForTonight() {
-      const today = new Date().toISOString().split('T')[0];
-      const tonightGames = games[today];
-
-      const tonightGamesElement = document.getElementById('tonightGames');
-      if (tonightGames) {
-        tonightGamesElement.textContent = tonightGames.join(', ');
-      } else {
-        tonightGamesElement.textContent = 'No games today.';
-      }
-    }
-
-    renderCalendar();
-    showGamesForTonight();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
