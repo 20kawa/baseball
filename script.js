@@ -1,5 +1,5 @@
 const games = {
-  // Example: Format { date: ['Game1', 'Game2'] }
+  // Use the correct date and game names you want to display
   '2025-04-05': ['pickle vs apple', 'ahhh vs banana'],
   '2025-04-10': ['Team C vs Team D'],
   '2025-04-12': ['Team E vs Team F'],
