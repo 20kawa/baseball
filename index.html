@@ -3,170 +3,164 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baseball Game Schedule</title>
+  <title>Baseball League Schedule</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding: 20px;
       background-color: #f4f4f4;
     }
-    .calendar-container {
-      display: flex;
-      flex-direction: column;
-      width: 80%;
-      max-width: 1200px;
-      background-color: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-    }
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .calendar-grid {
+    .calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      grid-gap: 10px;
+      gap: 5px;
+      max-width: 1000px;
+      margin: 0 auto;
     }
-    .calendar-day {
-      padding: 10px;
+    .calendar .day {
+      padding: 20px;
       text-align: center;
-      background-color: #fafafa;
-      border: 1px solid #ddd;
+      background-color: white;
       border-radius: 5px;
-      position: relative;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-    .calendar-day .game {
-      margin-top: 10px;
-      font-size: 14px;
-      background-color: #e0e0e0;
-      padding: 5px;
-      border-radius: 5px;
+    .calendar .day p {
+      margin: 0;
     }
-    .calendar-day .game span {
+    .calendar .date {
+      font-size: 1.5em;
       font-weight: bold;
     }
-    .calendar-nav {
-      display: flex;
-      justify-content: space-between;
+    .calendar .games {
       margin-top: 10px;
+      font-size: 0.9em;
     }
-    .button {
-      background-color: #4CAF50;
+    .calendar .game {
+      padding: 5px 0;
+      border-top: 1px solid #ddd;
+    }
+    .calendar .prev, .calendar .next {
+      background-color: #0056b3;
       color: white;
-      padding: 10px 20px;
-      border: none;
+      padding: 5px 10px;
       border-radius: 5px;
       cursor: pointer;
+      text-align: center;
     }
-    .button:disabled {
-      background-color: #cccccc;
+    .calendar .month-navigation {
+      text-align: center;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="calendar-container">
-    <div class="calendar-header">
-      <button id="prev-month" class="button">Previous</button>
-      <span id="current-month">April 2025</span>
-      <button id="next-month" class="button">Next</button>
+  <div class="month-navigation">
+    <button class="prev">Previous Month</button>
+    <span id="monthYear">April 2025</span>
+    <button class="next">Next Month</button>
+  </div>
+
+  <div class="calendar" id="calendar">
+    <div class="day">
+      <p class="date">4/1</p>
     </div>
-    <div class="calendar-grid" id="calendar-grid">
-      <!-- Calendar days will go here -->
+    <div class="day">
+      <p class="date">4/2</p>
+    </div>
+    <div class="day">
+      <p class="date">4/3</p>
+    </div>
+    <div class="day">
+      <p class="date">4/4</p>
+    </div>
+    <div class="day">
+      <p class="date">4/5</p>
+    </div>
+    <div class="day">
+      <p class="date">4/6</p>
+    </div>
+    <div class="day">
+      <p class="date">4/7</p>
+    </div>
+    <!-- Add more days for the month... -->
+    <!-- April 25th -->
+    <div class="day">
+      <p class="date">4/25</p>
+      <div class="games">
+        <div class="game">Plymouth Rocks vs Birch Lane Pickles</div>
+        <div class="game">Wild Militia vs The Shopping Woman</div>
+      </div>
+    </div>
+    <!-- April 26th -->
+    <div class="day">
+      <p class="date">4/26</p>
+      <div class="games">
+        <div class="game">The Waza vs Eastie Fighters</div>
+        <div class="game">Daddy's Angels vs The Hattricks</div>
+      </div>
+    </div>
+    <!-- April 27th -->
+    <div class="day">
+      <p class="date">4/27</p>
+      <div class="games">
+        <div class="game">Long Island Megatoads vs San Diego Nukes</div>
+        <div class="game">Plymouth Rocks vs Birch Lane Pickles</div>
+      </div>
+    </div>
+    <!-- April 28th -->
+    <div class="day">
+      <p class="date">4/28</p>
+      <div class="games">
+        <div class="game">Wild Militia vs The Shopping Woman</div>
+        <div class="game">Eastie Fighters vs Long Island Megatoads</div>
+      </div>
+    </div>
+    <!-- April 29th -->
+    <div class="day">
+      <p class="date">4/29</p>
+      <div class="games">
+        <div class="game">The Hattricks vs San Diego Nukes</div>
+        <div class="game">Daddy's Angels vs The Waza</div>
+      </div>
+    </div>
+    <!-- April 30th -->
+    <div class="day">
+      <p class="date">4/30</p>
+      <div class="games">
+        <div class="game">Eastie Fighters vs Long Island Megatoads</div>
+        <div class="game">The Hattricks vs San Diego Nukes</div>
+      </div>
     </div>
   </div>
 
   <script>
-    const games = {
-      '2025-04-25': [
-        { teams: ['Plymouth Rocks', 'Birch Lane Pickles'], score: ['0', '0'] },
-        { teams: ['Wild Militia', 'The Shopping Women'], score: ['0', '0'] }
-      ],
-      '2025-04-26': [
-        { teams: ['The Waza', 'Eastie Fighters'], score: ['0', '0'] },
-        { teams: ['Daddy\'s Angel', 'The Hattricks'], score: ['0', '0'] }
-      ],
-      // Add more games here as you go
-    };
-
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    const monthYearElement = document.getElementById('monthYear');
+    
     let currentDate = new Date();
-    let currentMonth = currentDate.getMonth();
-    let currentYear = currentDate.getFullYear();
 
-    const monthNames = [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 
-      'September', 'October', 'November', 'December'
-    ];
-
-    function generateCalendar(month, year) {
-      const firstDayOfMonth = new Date(year, month, 1);
-      const lastDayOfMonth = new Date(year, month + 1, 0);
-      const daysInMonth = lastDayOfMonth.getDate();
-      const startDay = firstDayOfMonth.getDay();
+    function updateCalendar() {
+      const month = currentDate.getMonth();
+      const year = currentDate.getFullYear();
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      monthYearElement.textContent = `${monthNames[month]} ${year}`;
       
-      document.getElementById('current-month').textContent = `${monthNames[month]} ${year}`;
-
-      const calendarGrid = document.getElementById('calendar-grid');
-      calendarGrid.innerHTML = ''; // Clear the grid
-
-      // Empty spaces before the first day of the month
-      for (let i = 0; i < startDay; i++) {
-        const emptyDiv = document.createElement('div');
-        calendarGrid.appendChild(emptyDiv);
-      }
-
-      // Fill in the days
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dayString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const dayDiv = document.createElement('div');
-        dayDiv.classList.add('calendar-day');
-        
-        // Display the day number
-        const dayNumber = document.createElement('span');
-        dayNumber.textContent = day;
-        dayDiv.appendChild(dayNumber);
-
-        // Display the games for that day
-        if (games[dayString]) {
-          games[dayString].forEach(game => {
-            const gameDiv = document.createElement('div');
-            gameDiv.classList.add('game');
-            gameDiv.innerHTML = `${game.teams[0]} vs ${game.teams[1]} - ${game.score[0]} - ${game.score[1]}`;
-            dayDiv.appendChild(gameDiv);
-          });
-        }
-
-        calendarGrid.appendChild(dayDiv);
-      }
+      // Insert your logic to generate days dynamically if necessary
     }
 
-    document.getElementById('prev-month').addEventListener('click', () => {
-      currentMonth--;
-      if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-      }
-      generateCalendar(currentMonth, currentYear);
+    prevButton.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      updateCalendar();
     });
 
-    document.getElementById('next-month').addEventListener('click', () => {
-      currentMonth++;
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-      }
-      generateCalendar(currentMonth, currentYear);
+    nextButton.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      updateCalendar();
     });
 
-    generateCalendar(currentMonth, currentYear); // Generate the initial calendar
+    // Initial calendar update
+    updateCalendar();
   </script>
 </body>
 </html>
